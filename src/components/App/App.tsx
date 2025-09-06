@@ -1,13 +1,16 @@
 import css from "./App.module.css";
 import CafeInfo from "../CafeInfo/CafeInfo";
 import {useState} from "react";
-import {Votes, VoteType} from "../../types/votes";
 import VoteOptions from "../VoteOptions/VoteOptions";
+import type { Votes, VoteType } from "../../types/votes";
 
 
 export default function App() {
-   const [votes, setVotes] = useState<Votes[]>([]);
-   const [canReset, setIsReset] = useState(true);
+   const [votes, setVotes] = useState<Votes>({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+   });
 
    const handleVote = (key: keyof Votes) => {
       setVotes({
@@ -15,6 +18,7 @@ export default function App() {
         [key]: votes[key] + 1,
       });
    };
+   const [canReset, setIsReset] = useState(true);
    
    const resetVotes = () => {
     setIsReset(!canReset)
@@ -23,6 +27,7 @@ export default function App() {
              <div className={css.app}>
               <CafeInfo />
               <VoteOptions votes={votes} onVote={handleVote} onReset={resetVotes}/>
+               {canReset ? "Hide message" : "Show message"}
             </div>
           )
 }
