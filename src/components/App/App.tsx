@@ -6,19 +6,19 @@ import type { Votes, VoteType } from "../../types/votes";
 
 
 export default function App() {
-   const [votes, setVotes] = useState<Votes>({
-    good: 0,
-    neutral: 0,
-    bad: 0,
-   });
+   const [votes, setVotes] = useState<Votes[]>({
+	good: 0,
+	neutral: 0,
+	bad: 0
+});
+   const [canReset, setIsReset] = useState(true);
 
-   const handleVote = (key: keyof Votes) => {
+   const handleVote = (key: keyof VoteType) => {
       setVotes({
         ...votes,
         [key]: votes[key] + 1,
       });
    };
-   const [canReset, setIsReset] = useState(true);
    
    const resetVotes = () => {
     setIsReset(!canReset)
@@ -27,7 +27,7 @@ export default function App() {
              <div className={css.app}>
               <CafeInfo />
               <VoteOptions votes={votes} onVote={handleVote} onReset={resetVotes}/>
-               {canReset ? "Hide message" : "Show message"}
+               {canReset && ( "Hide message")}
             </div>
           )
 }
