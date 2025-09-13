@@ -4,8 +4,8 @@ import type {Votes} from "../../types/votes";
 
 interface VoteStatsProps {
   votes: Votes;
-  totalVotes: () => void;
-  positiveRate: () => void;
+  totalVotes: number;
+  positiveRate: number;
 }
 
 export default function VoteStatus ({votes, totalVotes, positiveRate}: VoteStatsProps) {
@@ -14,8 +14,8 @@ export default function VoteStatus ({votes, totalVotes, positiveRate}: VoteStats
   <p className={styles.stat}>Good:{votes.good} <strong></strong></p>
   <p className={styles.stat}>Neutral:{votes.neutral} <strong></strong></p>
   <p className={styles.stat}>Bad:{votes.bad} <strong></strong></p>
-  <p className={styles.stat}>Total: <strong>0</strong></p>
-  <p className={styles.stat}>Positive: <strong>0%</strong></p>
+  <p className={styles.stat}>Total:{totalVotes} <strong>0</strong></p>
+  <p className={styles.stat}>Positive:{positiveRate} <strong>0%</strong></p>
 </div>
     )
 

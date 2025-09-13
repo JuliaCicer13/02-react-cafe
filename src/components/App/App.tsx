@@ -4,10 +4,7 @@ import {useState} from "react";
 import VoteOptions from "../VoteOptions/VoteOptions";
 import type { Votes, VoteType } from "../../types/votes";
 import VoteStatus from "../VoteStats/VoteStats";
-
-
-let positiveRate = 0;
-let totalVotes = 0;
+import Notification from "../Notification/Notification";
 
 export default function App() {
 const [votes, setVotes] = useState<Votes>({
@@ -15,12 +12,12 @@ const [votes, setVotes] = useState<Votes>({
 	neutral: 0,
 	bad: 0,
 });
+   const totalVotes = votes.good + votes.neutral + votes.bad;
 
-positiveRate = totalVotes
+   const positiveRate = totalVotes
     ? Math.round((votes.good / totalVotes) * 100)
-    : 0
-   const [canReset, setCanReset] = useState(true);
-
+    : 0;
+ 
    const handleVote = (key: VoteType) => {
       setVotes(prev =>({
         ...prev,
@@ -42,11 +39,15 @@ positiveRate = totalVotes
                  votes={votes} 
                  onVote={handleVote} 
                  onReset={resetVotes} 
-                 canReset={canReset}/>
-                 <VoteStatus 
+                 canReset={totalVotes > 0}
+             />
+                 {totalVotes > 0 ? ( <VoteStatus 
                     votes={votes}
                     totalVotes={totalVotes}
-                    positiveRate={positiveRate}/>
+                    positiveRate={positiveRate} />
+                 ) :(
+                <Notification/>
+                     )}
             </div>
           )
 }
